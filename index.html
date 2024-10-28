@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Profesyonel Sohbet Arayüzü</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome için ikon desteği -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Özel Stil Dosyası -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="chat-container">
+        <!-- Başlık Çubuğu -->
+        <header class="chat-header d-flex justify-content-between align-items-center p-3 bg-dark text-white border-bottom">
+            <div class="d-flex align-items-center">
+                <!-- Bootstrap Avatar -->
+                <div class="avatar me-3">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                        
+                    </div>
+                </div>
+                                <div class="user-info">
+                    <h2 class="mb-0">Vizyoner Yapay Zeka</h2>
+                    <span class="status online">Çevrimiçi</span>
+                </div>
+            </div>
+            <div class="header-icons">
+                <i class="fas fa-search me-3"></i>
+                <i class="fas fa-bell me-3"></i>
+                <i class="fas fa-ellipsis-v"></i>
+            </div>
+        </header>
+
+        <!-- Mesajlaşma Alanı -->
+        <div class="chat-messages p-4">
+            <div class="message received mb-3">
+                <p>Merhaba! Nasılsın?</p>
+                <span class="timestamp">10:30</span>
+            </div>
+            <div class="message sent mb-3">
+                <p>İyiyim, teşekkürler! Sen nasılsın?</p>
+                <span class="timestamp">10:31</span>
+                <span class="read-receipts"><i class="fas fa-check-double"></i></span>
+            </div>
+            <!-- Daha fazla mesaj -->
+        </div>
+
+        <!-- Giriş Alanı -->
+        <footer class="chat-input d-flex align-items-center p-3 bg-white border-top">
+            <i class="fas fa-paperclip me-3"></i>
+            <input type="text" class="form-control me-3" placeholder="Mesaj yaz...">
+            <i class="fas fa-smile me-3"></i>
+            <button class="btn btn-primary send-button"><i class="fas fa-paper-plane"></i></button>
+        </footer>
+    </div>
+
+    <!-- Bootstrap JS (Opsiyonel) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
