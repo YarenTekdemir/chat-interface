@@ -37,6 +37,9 @@ body {
     padding: 20px;
     overflow-y: auto;
     background-color: #F2F2F7;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* ensures baseline alignment */
 }
 
 .message {
@@ -45,20 +48,36 @@ body {
     border-radius: 20px;
     position: relative;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
 }
 
+/* ChatGPT (assistant) messages on the left */
 .received {
     background-color: #E5E5EA;
-    align-self: flex-start;
     color: #000000;
+    /* No extra margin needed, defaults to left */
 }
 
+/* User messages on the right */
 .sent {
     background-color: #007AFF;
-    align-self: flex-end;
     color: #FFFFFF;
+    margin-left: auto; /* pushes the message bubble all the way to the right */
 }
+#search-bar {
+    display: none; /* Varsayılan olarak gizli */
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+    width: 10px; /* Daha kısa genişlik */
 
+    z-index: 2; /* Önde durması için */
+  }
+  
+  
 .timestamp {
     display: block;
     font-size: 12px;

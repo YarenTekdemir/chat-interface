@@ -1,62 +1,229 @@
 <!DOCTYPE html>
 <html lang="tr">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Profesyonel Sohbet Arayüzü</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome için ikon desteği -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
     <!-- Özel Stil Dosyası -->
-    <link rel="stylesheet" href="index.css">
-</head>
-<body>
+    <link rel="stylesheet" href="index.css" />
+    <style>
+      #search-bar {
+        display: none; /* Varsayılan olarak gizli */
+        background-color: #fff;
+        color: #000;
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        font-size: 14px;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
     <div class="chat-container">
-        <!-- Başlık Çubuğu -->
-        <header class="chat-header d-flex justify-content-between align-items-center p-3 bg-dark text-white border-bottom">
-            <div class="d-flex align-items-center">
-                <!-- Bootstrap Avatar -->
-                <div class="avatar me-3">
-                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
-                        
-                    </div>
-                </div>
-                                <div class="user-info">
-                    <h2 class="mb-0">Vizyoner Yapay Zeka</h2>
-                    <span class="status online">Çevrimiçi</span>
-                </div>
-            </div>
-            <div class="header-icons">
-                <i class="fas fa-search me-3"></i>
-                <i class="fas fa-bell me-3"></i>
-                <i class="fas fa-ellipsis-v"></i>
-            </div>
-        </header>
-
-        <!-- Mesajlaşma Alanı -->
-        <div class="chat-messages p-4">
-            <div class="message received mb-3">
-                <p>Merhaba! Nasılsın?</p>
-                <span class="timestamp">10:30</span>
-            </div>
-            <div class="message sent mb-3">
-                <p>İyiyim, teşekkürler! Sen nasılsın?</p>
-                <span class="timestamp">10:31</span>
-                <span class="read-receipts"><i class="fas fa-check-double"></i></span>
-            </div>
-            <!-- Daha fazla mesaj -->
+      <!-- Başlık Çubuğu -->
+      <header
+        class="chat-header d-flex justify-content-between align-items-center p-3 bg-dark text-white border-bottom"
+      >
+        <div class="d-flex align-items-center" id="header-title">
+          <div class="avatar me-3">
+            <div
+              class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center"
+              style="width: 50px; height: 50px"
+            ></div>
+          </div>
+          <div class="user-info">
+            <h2 class="mb-0">Vizyoner Yapay Zeka</h2>
+            <span class="status online">Çevrimiçi</span>
+          </div>
         </div>
+        <input
+          type="text"
+          id="search-bar"
+          class="form-control"
+          placeholder="Mesajlarda ara..."
+        />
+        <div class="header-icons" id="header-icons">
+          <i
+            class="fas fa-search me-3"
+            id="search-icon"
+            style="cursor: pointer;"
+          ></i>
+          <i class="fas fa-bell me-3"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+      </header>
 
-        <!-- Giriş Alanı -->
-        <footer class="chat-input d-flex align-items-center p-3 bg-white border-top">
-            <i class="fas fa-paperclip me-3"></i>
-            <input type="text" class="form-control me-3" placeholder="Mesaj yaz...">
-            <i class="fas fa-smile me-3"></i>
-            <button class="btn btn-primary send-button"><i class="fas fa-paper-plane"></i></button>
-        </footer>
+      <!-- Mesajlaşma Alanı -->
+      <div class="chat-messages p-4" id="chat-messages">
+        <div class="message received mb-3">
+          <p>Merhaba! Nasılsın?</p>
+          <span class="timestamp">10:30</span>
+        </div>
+        <div class="message sent mb-3">
+          <p>İyiyim, teşekkürler! Sen nasılsın?</p>
+          <span class="timestamp">10:31</span>
+          <span class="read-receipts"><i class="fas fa-check-double"></i></span>
+        </div>
+      </div>
+
+      <!-- Giriş Alanı -->
+      <footer
+        class="chat-input d-flex align-items-center p-3 bg-white border-top"
+      >
+        <i class="fas fa-paperclip me-3"></i>
+        <input
+          type="text"
+          class="form-control me-3"
+          placeholder="Mesaj yaz..."
+          id="message-input"
+        />
+        <i class="fas fa-smile me-3"></i>
+        <button class="btn btn-primary send-button" id="send-button">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </footer>
     </div>
 
-    <!-- Bootstrap JS (Opsiyonel) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
+
+    <!-- JavaScript -->
+    <script>
+      const OPENAI_API_KEY = "YOUR_API_KEY_HERE"; // OpenAI API anahtarınızı buraya koyun.
+
+      const messageInput = document.getElementById("message-input");
+      const chatMessages = document.getElementById("chat-messages");
+      const sendButton = document.getElementById("send-button");
+
+      let conversation = [
+        {
+          role: "system",
+          content: "You are a helpful assistant who responds in Turkish.",
+        },
+      ];
+
+      function addMessageToUI(content, type = "received") {
+        const msgDiv = document.createElement("div");
+        msgDiv.classList.add("message", type, "mb-3");
+
+        const p = document.createElement("p");
+        p.textContent = content;
+
+        const timeSpan = document.createElement("span");
+        timeSpan.classList.add("timestamp");
+        timeSpan.textContent = new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+
+        msgDiv.appendChild(p);
+        msgDiv.appendChild(timeSpan);
+
+        if (type === "sent") {
+          const readReceipts = document.createElement("span");
+          readReceipts.classList.add("read-receipts");
+          readReceipts.innerHTML = '<i class="fas fa-check-double"></i>';
+          msgDiv.appendChild(readReceipts);
+        }
+
+        chatMessages.appendChild(msgDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      async function sendMessageToGPT(message) {
+        conversation.push({ role: "user", content: message });
+
+        try {
+          const response = await fetch(
+            "https://api.openai.com/v1/chat/completions",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${OPENAI_API_KEY}`,
+              },
+              body: JSON.stringify({
+                model: "gpt-3.5-turbo",
+                messages: conversation,
+                max_tokens: 150,
+                temperature: 0.7,
+              }),
+            }
+          );
+
+          const data = await response.json();
+          const assistantMessage = data.choices[0].message.content;
+
+          conversation.push({ role: "assistant", content: assistantMessage });
+          addMessageToUI(assistantMessage, "received");
+        } catch (error) {
+          console.error("Error:", error);
+          addMessageToUI("Üzgünüm, bir hata meydana geldi.", "received");
+        }
+      }
+
+      sendButton.addEventListener("click", () => {
+        const message = messageInput.value.trim();
+        if (message) {
+          addMessageToUI(message, "sent");
+          messageInput.value = "";
+          sendMessageToGPT(message);
+        }
+      });
+
+      messageInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          sendButton.click();
+        }
+      });
+
+      const searchIcon = document.getElementById("search-icon");
+      const searchBar = document.getElementById("search-bar");
+      const headerTitle = document.getElementById("header-title");
+      const headerIcons = document.getElementById("header-icons");
+
+      searchIcon.addEventListener("click", () => {
+        searchBar.style.display = "block";
+        headerTitle.style.display = "none";
+        headerIcons.style.display = "none";
+        searchBar.focus(); // Kullanıcının hemen yazmaya başlaması için odaklan
+      });
+
+      searchBar.addEventListener("input", () => {
+        const query = searchBar.value.toLowerCase();
+        const messages = chatMessages.querySelectorAll(".message");
+
+        messages.forEach((message) => {
+          const messageText = message.querySelector("p").textContent.toLowerCase();
+          if (messageText.includes(query)) {
+            message.style.display = "block"; 
+          } else {
+            message.style.display = "none"; 
+          }
+        });
+      });
+
+      searchBar.addEventListener("blur", () => {
+        searchBar.style.display = "none";
+        headerTitle.style.display = "flex";
+        headerIcons.style.display = "flex";
+
+        const messages = chatMessages.querySelectorAll(".message");
+        messages.forEach((message) => {
+          message.style.display = "block";
+        });
+      });
+    </script>
+  </body>
 </html>
