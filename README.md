@@ -1,2 +1,2 @@
-# chat-interface![image](https://github.com/user-attachments/assets/4fc50f45-7e55-47a4-99d8-75364ce73144)
-![image](https://github.com/user-attachments/assets/8988291b-70a2-4dfc-add6-ad64b0d131d8)
+![image](https://github.com/user-attachments/assets/c6da4e47-dbb3-4772-ad95-3eeffd960a69)
+![image](https://github.com/user-attachments/assets/f1869465-24fd-4176-9df6-8decf0f0f3ec)
